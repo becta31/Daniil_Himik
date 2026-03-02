@@ -327,8 +327,8 @@ export default function Page() {
             </div>
             
             <div className="overflow-x-auto pb-4 -mx-4 px-4 md:mx-0 md:px-0">
-              <div className="grid gap-0.5 min-w-[1000px] md:min-w-0" 
-                style={{gridTemplateColumns: 'repeat(18, minmax(40px, 1fr))', gridTemplateRows: 'repeat(10, 44px)'}}>
+              <div className="grid gap-1 min-w-[1100px] md:min-w-0" 
+                style={{gridTemplateColumns: 'repeat(18, minmax(50px, 1fr))', gridTemplateRows: 'repeat(10, 58px)'}}>
                 {elements.map(e => {
                   const pos = e.category === 'lanthanide' 
                     ? {row: 9, col: e.atomicNumber - 54} 
@@ -338,10 +338,10 @@ export default function Page() {
                   return (
                     <Dialog key={e.id}>
                       <DialogTrigger asChild>
-                        <button className={`${COLORS[e.category]?.split(' ')[0]} border ${COLORS[e.category]?.split(' ')[2]} text-sm flex flex-col items-center justify-center hover:scale-110 hover:z-10 hover:shadow-lg transition-all cursor-pointer`}
+                        <button className={`${COLORS[e.category]?.split(' ')[0]} border ${COLORS[e.category]?.split(' ')[2]} flex flex-col items-center justify-center hover:scale-110 hover:z-10 hover:shadow-lg transition-all cursor-pointer rounded-lg`}
                           style={{gridRow: pos.row, gridColumn: pos.col}}>
-                          <span className="text-[8px] text-slate-400">{e.atomicNumber}</span>
-                          <span className={`font-bold text-sm ${COLORS[e.category]?.split(' ')[1]}`}>{e.symbol}</span>
+                          <span className="text-[10px] text-slate-400 font-medium">{e.atomicNumber}</span>
+                          <span className={`font-bold text-xl ${COLORS[e.category]?.split(' ')[1]}`}>{e.symbol}</span>
                         </button>
                       </DialogTrigger>
                       <DialogContent className="bg-slate-900 border-slate-700 text-white max-w-md">
@@ -398,43 +398,43 @@ export default function Page() {
                 <Card className="bg-slate-800/50 border-slate-700 overflow-hidden">
                   <div className="md:flex">
                     <div className="w-full md:w-72 p-6 flex items-center justify-center bg-gradient-to-br from-slate-800/80 to-slate-900/80">
-                      <div className={`w-48 h-48 rounded-3xl ${COLORS[el.category]?.split(' ')[0]} border-4 ${COLORS[el.category]?.split(' ')[2]} flex flex-col items-center justify-center shadow-2xl`}>
-                        <span className="absolute top-4 left-5 text-sm font-medium text-slate-400">{el.atomicNumber}</span>
-                        <span className={`text-7xl font-bold ${COLORS[el.category]?.split(' ')[1]} drop-shadow-lg`}>{el.symbol}</span>
-                        <span className="mt-2 text-sm font-medium text-slate-400">{el.mass}</span>
+                      <div className={`w-56 h-56 rounded-3xl ${COLORS[el.category]?.split(' ')[0]} border-4 ${COLORS[el.category]?.split(' ')[2]} flex flex-col items-center justify-center shadow-2xl relative`}>
+                        <span className="absolute top-3 left-4 text-base font-medium text-slate-400">{el.atomicNumber}</span>
+                        <span className={`text-8xl font-bold ${COLORS[el.category]?.split(' ')[1]} drop-shadow-lg`}>{el.symbol}</span>
+                        <span className="mt-2 text-base font-medium text-slate-400">{el.mass}</span>
                       </div>
                     </div>
                     
                     <div className="flex-1 p-6 md:p-8">
                       <div className="flex items-start justify-between mb-6">
                         <div>
-                          <h3 className="text-3xl font-bold text-white">{el.nameRu}</h3>
-                          <p className="text-slate-400 text-lg">{el.nameEn}</p>
+                          <h3 className="text-4xl font-bold text-white">{el.nameRu}</h3>
+                          <p className="text-slate-400 text-xl">{el.nameEn}</p>
                         </div>
-                        <Badge className={`${COLORS[el.category]} text-sm px-4 py-2`}>{CAT_NAMES[el.category]}</Badge>
+                        <Badge className={`${COLORS[el.category]} text-base px-4 py-2`}>{CAT_NAMES[el.category]}</Badge>
                       </div>
                       
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                        <div className="bg-slate-700/50 rounded-xl p-4 text-center border border-slate-600/50">
-                          <div className="text-slate-400 text-xs mb-2 uppercase">Масса</div>
-                          <div className="text-2xl font-bold text-cyan-400">{el.mass}</div>
+                        <div className="bg-slate-700/50 rounded-xl p-5 text-center border border-slate-600/50">
+                          <div className="text-slate-400 text-sm mb-2 uppercase">Масса</div>
+                          <div className="text-3xl font-bold text-cyan-400">{el.mass}</div>
                         </div>
-                        <div className="bg-slate-700/50 rounded-xl p-4 text-center border border-slate-600/50">
-                          <div className="text-slate-400 text-xs mb-2 uppercase">Период</div>
-                          <div className="text-2xl font-bold text-purple-400">{el.period}</div>
+                        <div className="bg-slate-700/50 rounded-xl p-5 text-center border border-slate-600/50">
+                          <div className="text-slate-400 text-sm mb-2 uppercase">Период</div>
+                          <div className="text-3xl font-bold text-purple-400">{el.period}</div>
                         </div>
-                        <div className="bg-slate-700/50 rounded-xl p-4 text-center border border-slate-600/50">
-                          <div className="text-slate-400 text-xs mb-2 uppercase">Группа</div>
-                          <div className="text-2xl font-bold text-green-400">{el.group}</div>
+                        <div className="bg-slate-700/50 rounded-xl p-5 text-center border border-slate-600/50">
+                          <div className="text-slate-400 text-sm mb-2 uppercase">Группа</div>
+                          <div className="text-3xl font-bold text-green-400">{el.group}</div>
                         </div>
-                        <div className="bg-slate-700/50 rounded-xl p-4 text-center border border-slate-600/50">
-                          <div className="text-slate-400 text-xs mb-2 uppercase">Конфигурация</div>
-                          <div className="text-sm font-bold text-yellow-400 truncate">{el.electronConfiguration}</div>
+                        <div className="bg-slate-700/50 rounded-xl p-5 text-center border border-slate-600/50">
+                          <div className="text-slate-400 text-sm mb-2 uppercase">Конфигурация</div>
+                          <div className="text-base font-bold text-yellow-400">{el.electronConfiguration}</div>
                         </div>
                       </div>
                       
-                      <div className="bg-slate-700/30 rounded-xl p-5 border border-slate-600/30">
-                        <p className="text-slate-300 text-lg">{el.description}</p>
+                      <div className="bg-slate-700/30 rounded-xl p-6 border border-slate-600/30">
+                        <p className="text-slate-300 text-xl">{el.description}</p>
                       </div>
                     </div>
                   </div>
