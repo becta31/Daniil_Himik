@@ -410,7 +410,7 @@ export default function Page() {
                         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-t-2xl" />
                         <span className="absolute top-2 left-3 text-sm font-semibold text-slate-400">{el.atomicNumber}</span>
                         <span className="absolute top-2 right-3 text-sm font-medium text-slate-500">{el.mass}</span>
-                        <span className={`text-7xl font-bold ${COLORS[el.category]?.split(' ')[1]} drop-shadow-lg mb-1`}>{el.symbol}</span>
+                        <span className="text-7xl font-bold bg-gradient-to-br from-slate-100 via-slate-300 to-slate-500 bg-clip-text text-transparent drop-shadow-lg mb-1" style={{textShadow: '0 2px 10px rgba(255,255,255,0.3), 0 0 40px rgba(255,255,255,0.1)'}}>{el.symbol}</span>
                         <span className="text-base font-medium text-slate-300">{el.nameRu}</span>
                       </div>
                       
