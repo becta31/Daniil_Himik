@@ -396,26 +396,26 @@ export default function Page() {
                 </div>
                 
                 <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-slate-700/50 overflow-hidden shadow-2xl">
-                  <div className="md:flex">
+                  <div className="md:flex min-h-[400px]">
                     {/* Левая часть - карточка элемента */}
-                    <div className="w-full md:w-80 p-8 flex flex-col items-center justify-center bg-gradient-to-br from-slate-800 to-slate-900 relative">
+                    <div className={`w-full md:w-96 p-8 flex flex-col items-center justify-center relative ${COLORS[el.category]?.split(' ')[0]}`}>
                       {/* Декоративные элементы */}
-                      <div className="absolute inset-0 opacity-10">
-                        <div className="absolute top-4 left-4 w-20 h-20 rounded-full bg-cyan-500 blur-2xl" />
-                        <div className="absolute bottom-4 right-4 w-24 h-24 rounded-full bg-purple-500 blur-2xl" />
+                      <div className="absolute inset-0 opacity-20">
+                        <div className="absolute top-8 left-8 w-32 h-32 rounded-full bg-white blur-3xl" />
+                        <div className="absolute bottom-8 right-8 w-40 h-40 rounded-full bg-white blur-3xl" />
                       </div>
                       
                       {/* Карточка элемента */}
-                      <div className={`relative w-60 h-60 rounded-2xl ${COLORS[el.category]?.split(' ')[0]} border-2 ${COLORS[el.category]?.split(' ')[2]} flex flex-col items-center justify-center shadow-xl backdrop-blur-sm`}>
-                        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-t-2xl" />
-                        <span className="absolute top-3 left-4 text-base font-semibold text-slate-400">{el.atomicNumber}</span>
-                        <span className="absolute top-3 right-4 text-base font-medium text-slate-500">{el.mass}</span>
-                        <span className={`text-8xl font-bold ${COLORS[el.category]?.split(' ')[1]} drop-shadow-lg mb-1`}>{el.symbol}</span>
-                        <span className="text-lg font-medium text-slate-300">{el.nameRu}</span>
+                      <div className={`relative w-64 h-64 rounded-3xl ${COLORS[el.category]?.split(' ')[0]} border-4 ${COLORS[el.category]?.split(' ')[2]} flex flex-col items-center justify-center shadow-2xl backdrop-blur-sm bg-slate-900/50`}>
+                        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/30 to-transparent rounded-t-3xl" />
+                        <span className="absolute top-4 left-5 text-lg font-semibold text-slate-400">{el.atomicNumber}</span>
+                        <span className="absolute top-4 right-5 text-lg font-medium text-slate-500">{el.mass}</span>
+                        <span className={`text-9xl font-bold ${COLORS[el.category]?.split(' ')[1]} drop-shadow-lg mb-2`}>{el.symbol}</span>
+                        <span className="text-xl font-medium text-slate-300">{el.nameRu}</span>
                       </div>
                       
                       {/* Категория */}
-                      <Badge className={`mt-6 ${COLORS[el.category]} text-sm px-5 py-2 font-medium`}>
+                      <Badge className={`mt-8 ${COLORS[el.category]} text-base px-6 py-2.5 font-medium`}>
                         {CAT_NAMES[el.category]}
                       </Badge>
                     </div>
