@@ -1,9 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,20 +10,31 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+// Элемент периодической таблицы
+model Element {
+  id                  String   @id @default(cuid())
+  atomicNumber        Int      @unique
+  symbol              String   @unique
+  nameRu              String
+  nameEn              String
+  mass                Float
+  category            String
+  period              Int
+  group               Int
+  electronConfiguration String
+  description         String
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 }
 
-model Post {
-  id        String   @id @default(cuid())
-  title     String
-  content   String?
-  published Boolean  @default(false)
-  authorId  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+// Результат викторины
+model QuizResult {
+  id             String   @id @default(cuid())
+  playerName     String
+  score          Int
+  correctAnswers Int
+  totalQuestions Int
+  timeSpent      Int      // в секундах
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }

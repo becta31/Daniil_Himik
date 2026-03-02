@@ -9,29 +9,28 @@ const geistSans = Geist({
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+  variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Z.ai Code Scaffold - AI-Powered Development",
-  description: "Modern Next.js scaffold optimized for AI-powered development with Z.ai. Built with TypeScript, Tailwind CSS, and shadcn/ui.",
-  keywords: ["Z.ai", "Next.js", "TypeScript", "Tailwind CSS", "shadcn/ui", "AI development", "React"],
-  authors: [{ name: "Z.ai Team" }],
+  title: "ХИМИК — Интерактивный тренажер по химии",
+  description: "Изучайте периодическую таблицу Менделеева с 118 химическими элементами. Интерактивный тренажер с режимами обучения и викторины.",
+  keywords: ["Химия", "Периодическая таблица", "Менделеев", "Обучение", "Викторина", "Элементы", "Химические элементы"],
+  authors: [{ name: "Daniil Himik" }],
   icons: {
-    icon: "https://z-cdn.chatglm.cn/z-ai/static/logo.svg",
+    icon: "/logo.svg",
   },
   openGraph: {
-    title: "Z.ai Code Scaffold",
-    description: "AI-powered development with modern React stack",
-    url: "https://chat.z.ai",
-    siteName: "Z.ai",
+    title: "ХИМИК — Интерактивный тренажер по химии",
+    description: "Изучайте периодическую таблицу с 118 химическими элементами",
+    siteName: "ХИМИК",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Z.ai Code Scaffold",
-    description: "AI-powered development with modern React stack",
+    title: "ХИМИК — Интерактивный тренажер по химии",
+    description: "Изучайте периодическую таблицу с 118 химическими элементами",
   },
 };
 
@@ -41,7 +40,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="ru" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
