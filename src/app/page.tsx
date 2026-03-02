@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
-import { Table, BookOpen, Target, Trophy, Atom, Zap, ChevronRight, Medal, Menu, X, Home, FlaskConical, Sparkles, Award } from 'lucide-react'
+import { Table, BookOpen, Target, Trophy, Atom, ChevronRight, Medal, Menu, X, Home, Zap, FlaskConical, Award } from 'lucide-react'
 
 interface Element {
   id: string
@@ -192,6 +192,10 @@ export default function Page() {
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white flex flex-col">
       {/* Animated background */}
       <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-10"
+          style={{ backgroundImage: 'url(/chemistry-bg.png)' }}
+        />
         <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-purple-500/5 to-pink-500/5" />
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
@@ -241,72 +245,62 @@ export default function Page() {
       <main className="pt-20 pb-24 md:pb-8 px-4 md:px-8 flex-1 relative z-10">
         {/* Home */}
         {view === 'home' && (
-          <div className="max-w-7xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[calc(100vh-12rem)]">
-              <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
-                <div className="inline-flex items-center gap-2 bg-cyan-500/10 border border-cyan-500/30 rounded-full px-4 py-1.5 mb-6">
-                  <Sparkles className="w-4 h-4 text-cyan-400" />
-                  <span className="text-cyan-400 text-sm font-medium">118 химических элементов</span>
-                </div>
-                
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
-                  <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">ХИМИК</span>
-                </h1>
-                
-                <p className="text-xl text-slate-400 mb-8 max-w-lg">
-                  Интерактивный тренажер для изучения периодической таблицы. 
-                  Изучайте элементы и проверяйте знания в викторине!
-                </p>
-                
-                <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                  <Button size="lg" onClick={() => handleNav('study')} 
-                    className="bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-600 hover:to-purple-600 rounded-xl px-8 py-6 text-lg shadow-lg shadow-cyan-500/20">
-                    <BookOpen className="w-5 h-5 mr-2" />
-                    Начать обучение
-                  </Button>
-                  <Button size="lg" variant="outline" onClick={() => handleNav('quiz')} 
-                    className="border-2 border-cyan-500/50 text-cyan-400 hover:bg-cyan-500/10 rounded-xl px-8 py-6 text-lg">
-                    <Target className="w-5 h-5 mr-2" />
-                    Викторина
-                  </Button>
-                </div>
-                
-                <div className="flex gap-8 mt-12">
-                  <div className="text-center">
-                    <div className="text-3xl font-bold text-white">118</div>
-                    <div className="text-slate-500 text-sm">Элементов</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-3xl font-bold text-white">10</div>
-                    <div className="text-slate-500 text-sm">Категорий</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-3xl font-bold text-white">{leaderboard.length}</div>
-                    <div className="text-slate-500 text-sm">Игроков</div>
-                  </div>
-                </div>
-              </div>
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <h1 className="text-6xl md:text-7xl font-bold mb-4">
+                <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">ХИМИК</span>
+              </h1>
+              <p className="text-slate-400 text-lg max-w-md mx-auto">
+                Интерактивный тренажер для изучения периодической таблицы Менделеева
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-6 mb-12">
+              <Card 
+                onClick={() => handleNav('table')} 
+                className="bg-slate-800/50 border-slate-700/50 hover:border-cyan-500/50 cursor-pointer hover:-translate-y-1 transition-all">
+                <CardContent className="p-8 text-center">
+                  <div className="text-5xl mb-4">⚛️</div>
+                  <h3 className="text-xl font-semibold text-white mb-2">Таблица</h3>
+                  <p className="text-slate-400 text-sm">Интерактивная таблица Менделеева с 118 элементами</p>
+                </CardContent>
+              </Card>
               
-              <div className="grid grid-cols-2 gap-4">
-                {[
-                  {icon: Table, title: 'Периодическая таблица', desc: 'Интерактивная таблица Менделеева с 118 элементами', color: 'cyan'},
-                  {icon: BookOpen, title: 'Режим обучения', desc: 'Карточки с подробной информацией о каждом элементе', color: 'purple'},
-                  {icon: Target, title: 'Викторина', desc: 'Проверьте свои знания и получите очки', color: 'pink'},
-                  {icon: Trophy, title: 'Таблица лидеров', desc: 'Соревнуйтесь с другими игроками', color: 'yellow'},
-                ].map((item, i) => (
-                  <Card key={i} 
-                    className="bg-slate-800/50 border-slate-700/50 hover:border-slate-600 cursor-pointer hover:-translate-y-1 transition-all group"
-                    onClick={() => handleNav(['table', 'study', 'quiz', 'leaderboard'][i] as ViewType)}>
-                    <CardContent className="p-6">
-                      <div className={`w-12 h-12 rounded-xl bg-${item.color}-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                        <item.icon className={`w-6 h-6 text-${item.color}-400`} />
-                      </div>
-                      <h3 className="font-semibold text-white text-lg mb-2">{item.title}</h3>
-                      <p className="text-slate-400 text-sm">{item.desc}</p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+              <Card 
+                onClick={() => handleNav('study')} 
+                className="bg-slate-800/50 border-slate-700/50 hover:border-purple-500/50 cursor-pointer hover:-translate-y-1 transition-all">
+                <CardContent className="p-8 text-center">
+                  <div className="text-5xl mb-4">📚</div>
+                  <h3 className="text-xl font-semibold text-white mb-2">Обучение</h3>
+                  <p className="text-slate-400 text-sm">Изучайте карточки с информацией об элементах</p>
+                </CardContent>
+              </Card>
+              
+              <Card 
+                onClick={() => handleNav('quiz')} 
+                className="bg-slate-800/50 border-slate-700/50 hover:border-pink-500/50 cursor-pointer hover:-translate-y-1 transition-all">
+                <CardContent className="p-8 text-center">
+                  <div className="text-5xl mb-4">🎯</div>
+                  <h3 className="text-xl font-semibold text-white mb-2">Викторина</h3>
+                  <p className="text-slate-400 text-sm">Проверьте свои знания и получите очки</p>
+                </CardContent>
+              </Card>
+              
+              <Card 
+                onClick={() => handleNav('leaderboard')} 
+                className="bg-slate-800/50 border-slate-700/50 hover:border-yellow-500/50 cursor-pointer hover:-translate-y-1 transition-all">
+                <CardContent className="p-8 text-center">
+                  <div className="text-5xl mb-4">🏆</div>
+                  <h3 className="text-xl font-semibold text-white mb-2">Рейтинг</h3>
+                  <p className="text-slate-400 text-sm">Таблица лидеров и лучшие результаты</p>
+                </CardContent>
+              </Card>
+            </div>
+            
+            {/* Developers */}
+            <div className="text-center text-slate-500 text-sm">
+              <p className="mb-1">Разработчики</p>
+              <p className="text-slate-400">Даниил Беседин • Александр Чарышкин</p>
             </div>
           </div>
         )}
@@ -460,7 +454,7 @@ export default function Page() {
                 
                 <div className="flex justify-between mt-6 gap-4">
                   <Button variant="outline" onClick={() => setIdx(i => Math.max(0, i - 1))} disabled={idx === 0} 
-                    className="flex-1 border-slate-600 h-12">← Назад</Button>
+                    className="flex-1 border-slate-600 text-slate-300 hover:text-white hover:bg-slate-800 h-12">← Назад</Button>
                   <Button onClick={() => setIdx(i => Math.min(filtered.length - 1, i + 1))} 
                     disabled={idx === filtered.length - 1} 
                     className="flex-1 bg-cyan-500 hover:bg-cyan-600 h-12">Далее →</Button>
