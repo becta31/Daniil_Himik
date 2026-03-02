@@ -395,46 +395,64 @@ export default function Page() {
                   <span>Элемент {idx + 1} из {filtered.length}</span>
                 </div>
                 
-                <Card className="bg-slate-800/50 border-slate-700 overflow-hidden">
+                <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-slate-700/50 overflow-hidden shadow-2xl">
                   <div className="md:flex">
-                    <div className="w-full md:w-72 p-6 flex items-center justify-center bg-gradient-to-br from-slate-800/80 to-slate-900/80">
-                      <div className={`w-56 h-56 rounded-3xl ${COLORS[el.category]?.split(' ')[0]} border-4 ${COLORS[el.category]?.split(' ')[2]} flex flex-col items-center justify-center shadow-2xl relative`}>
-                        <span className="absolute top-3 left-4 text-base font-medium text-slate-400">{el.atomicNumber}</span>
-                        <span className={`text-8xl font-bold ${COLORS[el.category]?.split(' ')[1]} drop-shadow-lg`}>{el.symbol}</span>
-                        <span className="mt-2 text-base font-medium text-slate-400">{el.mass}</span>
+                    {/* Левая часть - карточка элемента */}
+                    <div className="w-full md:w-80 p-8 flex flex-col items-center justify-center bg-gradient-to-br from-slate-800 to-slate-900 relative">
+                      {/* Декоративные элементы */}
+                      <div className="absolute inset-0 opacity-10">
+                        <div className="absolute top-4 left-4 w-20 h-20 rounded-full bg-cyan-500 blur-2xl" />
+                        <div className="absolute bottom-4 right-4 w-24 h-24 rounded-full bg-purple-500 blur-2xl" />
                       </div>
+                      
+                      {/* Карточка элемента */}
+                      <div className={`relative w-52 h-52 rounded-2xl ${COLORS[el.category]?.split(' ')[0]} border-2 ${COLORS[el.category]?.split(' ')[2]} flex flex-col items-center justify-center shadow-xl backdrop-blur-sm`}>
+                        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-t-2xl" />
+                        <span className="absolute top-2 left-3 text-sm font-semibold text-slate-400">{el.atomicNumber}</span>
+                        <span className="absolute top-2 right-3 text-sm font-medium text-slate-500">{el.mass}</span>
+                        <span className={`text-7xl font-bold ${COLORS[el.category]?.split(' ')[1]} drop-shadow-lg mb-1`}>{el.symbol}</span>
+                        <span className="text-base font-medium text-slate-300">{el.nameRu}</span>
+                      </div>
+                      
+                      {/* Категория */}
+                      <Badge className={`mt-6 ${COLORS[el.category]} text-sm px-5 py-2 font-medium`}>
+                        {CAT_NAMES[el.category]}
+                      </Badge>
                     </div>
                     
+                    {/* Правая часть - информация */}
                     <div className="flex-1 p-6 md:p-8">
-                      <div className="flex items-start justify-between mb-6">
-                        <div>
-                          <h3 className="text-4xl font-bold text-white">{el.nameRu}</h3>
-                          <p className="text-slate-400 text-xl">{el.nameEn}</p>
-                        </div>
-                        <Badge className={`${COLORS[el.category]} text-base px-4 py-2`}>{CAT_NAMES[el.category]}</Badge>
+                      {/* Заголовок */}
+                      <div className="mb-6">
+                        <h3 className="text-4xl font-bold text-white mb-1">{el.nameRu}</h3>
+                        <p className="text-slate-400 text-xl">{el.nameEn}</p>
                       </div>
                       
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                        <div className="bg-slate-700/50 rounded-xl p-5 text-center border border-slate-600/50">
-                          <div className="text-slate-400 text-sm mb-2 uppercase">Масса</div>
-                          <div className="text-3xl font-bold text-cyan-400">{el.mass}</div>
+                      {/* Характеристики */}
+                      <div className="grid grid-cols-3 gap-4 mb-6">
+                        <div className="bg-slate-700/40 rounded-xl p-4 text-center border border-slate-600/30 hover:border-cyan-500/50 transition-colors">
+                          <div className="text-slate-400 text-xs mb-1 uppercase tracking-wider">Атомная масса</div>
+                          <div className="text-2xl font-bold text-cyan-400">{el.mass}</div>
                         </div>
-                        <div className="bg-slate-700/50 rounded-xl p-5 text-center border border-slate-600/50">
-                          <div className="text-slate-400 text-sm mb-2 uppercase">Период</div>
-                          <div className="text-3xl font-bold text-purple-400">{el.period}</div>
+                        <div className="bg-slate-700/40 rounded-xl p-4 text-center border border-slate-600/30 hover:border-purple-500/50 transition-colors">
+                          <div className="text-slate-400 text-xs mb-1 uppercase tracking-wider">Период</div>
+                          <div className="text-2xl font-bold text-purple-400">{el.period}</div>
                         </div>
-                        <div className="bg-slate-700/50 rounded-xl p-5 text-center border border-slate-600/50">
-                          <div className="text-slate-400 text-sm mb-2 uppercase">Группа</div>
-                          <div className="text-3xl font-bold text-green-400">{el.group}</div>
-                        </div>
-                        <div className="bg-slate-700/50 rounded-xl p-5 text-center border border-slate-600/50">
-                          <div className="text-slate-400 text-sm mb-2 uppercase">Конфигурация</div>
-                          <div className="text-base font-bold text-yellow-400">{el.electronConfiguration}</div>
+                        <div className="bg-slate-700/40 rounded-xl p-4 text-center border border-slate-600/30 hover:border-green-500/50 transition-colors">
+                          <div className="text-slate-400 text-xs mb-1 uppercase tracking-wider">Группа</div>
+                          <div className="text-2xl font-bold text-green-400">{el.group}</div>
                         </div>
                       </div>
                       
-                      <div className="bg-slate-700/30 rounded-xl p-6 border border-slate-600/30">
-                        <p className="text-slate-300 text-xl">{el.description}</p>
+                      {/* Электронная конфигурация */}
+                      <div className="bg-slate-700/30 rounded-xl p-4 mb-6 border border-slate-600/30">
+                        <div className="text-slate-400 text-xs mb-2 uppercase tracking-wider">Электронная конфигурация</div>
+                        <div className="text-lg font-mono font-semibold text-amber-400">{el.electronConfiguration}</div>
+                      </div>
+                      
+                      {/* Описание */}
+                      <div className="bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-xl p-5 border border-slate-600/30">
+                        <p className="text-slate-200 text-lg leading-relaxed">{el.description}</p>
                       </div>
                     </div>
                   </div>
