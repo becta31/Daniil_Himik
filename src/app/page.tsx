@@ -23,17 +23,17 @@ interface Element {
   description: string
 }
 
-const COLORS: Record<string, string> = {
-  alkali_metal: 'bg-red-500/30 text-red-300 border-red-500/50',
-  alkaline_earth_metal: 'bg-orange-500/30 text-orange-300 border-orange-500/50',
-  transition_metal: 'bg-yellow-500/30 text-yellow-300 border-yellow-500/50',
-  post_transition_metal: 'bg-green-500/30 text-green-300 border-green-500/50',
-  metalloid: 'bg-teal-500/30 text-teal-300 border-teal-500/50',
-  nonmetal: 'bg-cyan-500/30 text-cyan-300 border-cyan-500/50',
-  halogen: 'bg-blue-500/30 text-blue-300 border-blue-500/50',
-  noble_gas: 'bg-purple-500/30 text-purple-300 border-purple-500/50',
-  lanthanide: 'bg-pink-500/30 text-pink-300 border-pink-500/50',
-  actinide: 'bg-rose-500/30 text-rose-300 border-rose-500/50',
+const COLORS: Record<string, { bg: string; text: string; border: string }> = {
+  alkali_metal: { bg: 'bg-red-500/30', text: 'text-red-400', border: 'border-red-500/50' },
+  alkaline_earth_metal: { bg: 'bg-orange-500/30', text: 'text-orange-400', border: 'border-orange-500/50' },
+  transition_metal: { bg: 'bg-yellow-500/30', text: 'text-yellow-400', border: 'border-yellow-500/50' },
+  post_transition_metal: { bg: 'bg-green-500/30', text: 'text-green-400', border: 'border-green-500/50' },
+  metalloid: { bg: 'bg-teal-500/30', text: 'text-teal-400', border: 'border-teal-500/50' },
+  nonmetal: { bg: 'bg-cyan-500/30', text: 'text-cyan-400', border: 'border-cyan-500/50' },
+  halogen: { bg: 'bg-blue-500/30', text: 'text-blue-400', border: 'border-blue-500/50' },
+  noble_gas: { bg: 'bg-purple-500/30', text: 'text-purple-400', border: 'border-purple-500/50' },
+  lanthanide: { bg: 'bg-pink-500/30', text: 'text-pink-400', border: 'border-pink-500/50' },
+  actinide: { bg: 'bg-rose-500/30', text: 'text-rose-400', border: 'border-rose-500/50' },
 }
 
 const CAT_NAMES: Record<string, string> = {
@@ -321,7 +321,7 @@ export default function Page() {
               </div>
               <div className="flex flex-wrap gap-2">
                 {Object.entries(COLORS).map(([k, c]) => (
-                  <Badge key={k} className={`${c} text-xs`}>{CAT_NAMES[k]}</Badge>
+                  <Badge key={k} className={`${c.bg} ${c.text} ${c.border} text-xs`}>{CAT_NAMES[k]}</Badge>
                 ))}
               </div>
             </div>
@@ -338,10 +338,10 @@ export default function Page() {
                   return (
                     <Dialog key={e.id}>
                       <DialogTrigger asChild>
-                        <button className={`${COLORS[e.category]?.split(' ')[0]} border ${COLORS[e.category]?.split(' ')[2]} flex flex-col items-center justify-center hover:scale-110 hover:z-10 hover:shadow-lg transition-all cursor-pointer rounded-lg`}
+                        <button className={`${COLORS[e.category]?.bg} border ${COLORS[e.category]?.border} flex flex-col items-center justify-center hover:scale-110 hover:z-10 hover:shadow-lg transition-all cursor-pointer rounded-lg`}
                           style={{gridRow: pos.row, gridColumn: pos.col}}>
                           <span className="text-[10px] text-slate-400 font-medium">{e.atomicNumber}</span>
-                          <span className={`font-bold text-xl ${COLORS[e.category]?.split(' ')[1]}`}>{e.symbol}</span>
+                          <span className={`font-bold text-xl ${COLORS[e.category]?.text}`}>{e.symbol}</span>
                         </button>
                       </DialogTrigger>
                       <DialogContent className="bg-slate-900 border-slate-700 text-white max-w-md">
@@ -398,7 +398,7 @@ export default function Page() {
                 <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-slate-700/50 overflow-hidden shadow-2xl">
                   <div className="md:flex min-h-[400px]">
                     {/* Левая часть - карточка элемента */}
-                    <div className={`w-full md:w-96 p-8 flex flex-col items-center justify-center relative ${COLORS[el.category]?.split(' ')[0]}`}>
+                    <div className={`w-full md:w-96 p-8 flex flex-col items-center justify-center relative ${COLORS[el.category]?.bg}`}>
                       {/* Декоративные элементы */}
                       <div className="absolute inset-0 opacity-20">
                         <div className="absolute top-8 left-8 w-32 h-32 rounded-full bg-white blur-3xl" />
@@ -406,16 +406,16 @@ export default function Page() {
                       </div>
                       
                       {/* Карточка элемента */}
-                      <div className={`relative w-64 h-64 rounded-3xl ${COLORS[el.category]?.split(' ')[0]} border-4 ${COLORS[el.category]?.split(' ')[2]} flex flex-col items-center justify-center shadow-2xl backdrop-blur-sm bg-slate-900/50`}>
+                      <div className={`relative w-64 h-64 rounded-3xl ${COLORS[el.category]?.bg} border-4 ${COLORS[el.category]?.border} flex flex-col items-center justify-center shadow-2xl backdrop-blur-sm bg-slate-900/50`}>
                         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/30 to-transparent rounded-t-3xl" />
                         <span className="absolute top-4 left-5 text-lg font-semibold text-slate-400">{el.atomicNumber}</span>
                         <span className="absolute top-4 right-5 text-lg font-medium text-slate-500">{el.mass}</span>
-                        <span className={`text-9xl font-bold ${COLORS[el.category]?.split(' ')[1]} drop-shadow-lg mb-2`}>{el.symbol}</span>
+                        <span className={`text-9xl font-bold ${COLORS[el.category]?.text} drop-shadow-lg mb-2`}>{el.symbol}</span>
                         <span className="text-xl font-medium text-slate-300">{el.nameRu}</span>
                       </div>
                       
                       {/* Категория */}
-                      <Badge className={`mt-8 ${COLORS[el.category]} text-base px-6 py-2.5 font-medium`}>
+                      <Badge className={`mt-8 ${COLORS[el.category]?.bg} ${COLORS[el.category]?.text} ${COLORS[el.category]?.border} text-base px-6 py-2.5 font-medium`}>
                         {CAT_NAMES[el.category]}
                       </Badge>
                     </div>
