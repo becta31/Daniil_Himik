@@ -38,7 +38,7 @@ ${lastUserMessage?.content}<|im_end|>
       console.log('Calling Hugging Face API...');
       
       const response = await fetch(
-        'https://api-inference.huggingface.co/models/Qwen/Qwen2.5-72B-Instruct',
+        'https://router.huggingface.co/hf-inference/models/Qwen/Qwen2.5-72B-Instruct',
         {
           method: 'POST',
           headers: {
