@@ -317,10 +317,10 @@ export default function Page() {
               </p>
             </div>
             
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6 max-w-4xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-6 gap-3 md:gap-6 max-w-4xl mx-auto">
               <Card 
                 onClick={() => handleNav('table')} 
-                className="bg-slate-800/50 border-slate-700/50 hover:border-cyan-500/50 cursor-pointer hover:-translate-y-1 transition-all">
+                className="bg-slate-800/50 border-slate-700/50 hover:border-cyan-500/50 cursor-pointer hover:-translate-y-1 transition-all md:col-span-2">
                 <CardContent className="p-4 md:p-8 text-center">
                   <div className="text-3xl md:text-5xl mb-2 md:mb-4">⚛️</div>
                   <h3 className="text-base md:text-xl font-semibold text-white mb-1 md:mb-2">Таблица</h3>
@@ -330,7 +330,7 @@ export default function Page() {
               
               <Card 
                 onClick={() => handleNav('study')} 
-                className="bg-slate-800/50 border-slate-700/50 hover:border-purple-500/50 cursor-pointer hover:-translate-y-1 transition-all">
+                className="bg-slate-800/50 border-slate-700/50 hover:border-purple-500/50 cursor-pointer hover:-translate-y-1 transition-all md:col-span-2">
                 <CardContent className="p-4 md:p-8 text-center">
                   <div className="text-3xl md:text-5xl mb-2 md:mb-4">📚</div>
                   <h3 className="text-base md:text-xl font-semibold text-white mb-1 md:mb-2">Обучение</h3>
@@ -340,7 +340,7 @@ export default function Page() {
               
               <Card 
                 onClick={() => handleNav('quiz')} 
-                className="bg-slate-800/50 border-slate-700/50 hover:border-pink-500/50 cursor-pointer hover:-translate-y-1 transition-all">
+                className="bg-slate-800/50 border-slate-700/50 hover:border-pink-500/50 cursor-pointer hover:-translate-y-1 transition-all md:col-span-2">
                 <CardContent className="p-4 md:p-8 text-center">
                   <div className="text-3xl md:text-5xl mb-2 md:mb-4">🎯</div>
                   <h3 className="text-base md:text-xl font-semibold text-white mb-1 md:mb-2">Викторина</h3>
@@ -348,12 +348,12 @@ export default function Page() {
                 </CardContent>
               </Card>
               
-              {/* Empty cell for desktop alignment */}
+              {/* Spacer for alignment */}
               <div className="hidden md:block" />
               
               <Card 
                 onClick={() => handleNav('ai')} 
-                className="bg-slate-800/50 border-slate-700/50 hover:border-emerald-500/50 cursor-pointer hover:-translate-y-1 transition-all">
+                className="bg-slate-800/50 border-slate-700/50 hover:border-emerald-500/50 cursor-pointer hover:-translate-y-1 transition-all md:col-span-2">
                 <CardContent className="p-4 md:p-8 text-center">
                   <div className="text-3xl md:text-5xl mb-2 md:mb-4">🤖</div>
                   <h3 className="text-base md:text-xl font-semibold text-white mb-1 md:mb-2">ИИ-помощник</h3>
@@ -363,13 +363,16 @@ export default function Page() {
               
               <Card 
                 onClick={() => handleNav('leaderboard')} 
-                className="bg-slate-800/50 border-slate-700/50 hover:border-yellow-500/50 cursor-pointer hover:-translate-y-1 transition-all">
+                className="bg-slate-800/50 border-slate-700/50 hover:border-yellow-500/50 cursor-pointer hover:-translate-y-1 transition-all md:col-span-2">
                 <CardContent className="p-4 md:p-8 text-center">
                   <div className="text-3xl md:text-5xl mb-2 md:mb-4">🏆</div>
                   <h3 className="text-base md:text-xl font-semibold text-white mb-1 md:mb-2">Рейтинг</h3>
                   <p className="text-slate-400 text-xs md:text-sm hidden md:block">Таблица лидеров</p>
                 </CardContent>
               </Card>
+              
+              {/* Spacer for alignment */}
+              <div className="hidden md:block" />
             </div>
             
             {/* Developers */}
