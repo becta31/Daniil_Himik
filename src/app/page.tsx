@@ -317,62 +317,67 @@ export default function Page() {
               </p>
             </div>
             
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6 max-w-4xl mx-auto">
               <Card 
                 onClick={() => handleNav('table')} 
                 className="bg-slate-800/50 border-slate-700/50 hover:border-cyan-500/50 cursor-pointer hover:-translate-y-1 transition-all">
-                <CardContent className="p-8 text-center">
-                  <div className="text-5xl mb-4">⚛️</div>
-                  <h3 className="text-xl font-semibold text-white mb-2">Таблица</h3>
-                  <p className="text-slate-400 text-sm">Интерактивная таблица Менделеева</p>
+                <CardContent className="p-4 md:p-8 text-center">
+                  <div className="text-3xl md:text-5xl mb-2 md:mb-4">⚛️</div>
+                  <h3 className="text-base md:text-xl font-semibold text-white mb-1 md:mb-2">Таблица</h3>
+                  <p className="text-slate-400 text-xs md:text-sm hidden md:block">Интерактивная таблица Менделеева</p>
                 </CardContent>
               </Card>
               
               <Card 
                 onClick={() => handleNav('study')} 
                 className="bg-slate-800/50 border-slate-700/50 hover:border-purple-500/50 cursor-pointer hover:-translate-y-1 transition-all">
-                <CardContent className="p-8 text-center">
-                  <div className="text-5xl mb-4">📚</div>
-                  <h3 className="text-xl font-semibold text-white mb-2">Обучение</h3>
-                  <p className="text-slate-400 text-sm">Карточки с элементами</p>
+                <CardContent className="p-4 md:p-8 text-center">
+                  <div className="text-3xl md:text-5xl mb-2 md:mb-4">📚</div>
+                  <h3 className="text-base md:text-xl font-semibold text-white mb-1 md:mb-2">Обучение</h3>
+                  <p className="text-slate-400 text-xs md:text-sm hidden md:block">Карточки с элементами</p>
                 </CardContent>
               </Card>
               
               <Card 
                 onClick={() => handleNav('quiz')} 
                 className="bg-slate-800/50 border-slate-700/50 hover:border-pink-500/50 cursor-pointer hover:-translate-y-1 transition-all">
-                <CardContent className="p-8 text-center">
-                  <div className="text-5xl mb-4">🎯</div>
-                  <h3 className="text-xl font-semibold text-white mb-2">Викторина</h3>
-                  <p className="text-slate-400 text-sm">Проверьте знания</p>
+                <CardContent className="p-4 md:p-8 text-center">
+                  <div className="text-3xl md:text-5xl mb-2 md:mb-4">🎯</div>
+                  <h3 className="text-base md:text-xl font-semibold text-white mb-1 md:mb-2">Викторина</h3>
+                  <p className="text-slate-400 text-xs md:text-sm hidden md:block">Проверьте знания</p>
                 </CardContent>
               </Card>
-            </div>
-            
-            <div className="flex justify-center gap-6 mb-12">
+              
               <Card 
                 onClick={() => handleNav('ai')} 
-                className="bg-slate-800/50 border-slate-700/50 hover:border-emerald-500/50 cursor-pointer hover:-translate-y-1 transition-all w-full md:w-auto md:min-w-[200px]">
-                <CardContent className="p-8 text-center">
-                  <div className="text-5xl mb-4">🤖</div>
-                  <h3 className="text-xl font-semibold text-white mb-2">ИИ-помощник</h3>
-                  <p className="text-slate-400 text-sm">Задайте вопрос по химии</p>
+                className="bg-slate-800/50 border-slate-700/50 hover:border-emerald-500/50 cursor-pointer hover:-translate-y-1 transition-all">
+                <CardContent className="p-4 md:p-8 text-center">
+                  <div className="text-3xl md:text-5xl mb-2 md:mb-4">🤖</div>
+                  <h3 className="text-base md:text-xl font-semibold text-white mb-1 md:mb-2">ИИ-помощник</h3>
+                  <p className="text-slate-400 text-xs md:text-sm hidden md:block">Задайте вопрос по химии</p>
                 </CardContent>
               </Card>
               
               <Card 
                 onClick={() => handleNav('leaderboard')} 
-                className="bg-slate-800/50 border-slate-700/50 hover:border-yellow-500/50 cursor-pointer hover:-translate-y-1 transition-all w-full md:w-auto md:min-w-[200px]">
-                <CardContent className="p-8 text-center">
-                  <div className="text-5xl mb-4">🏆</div>
-                  <h3 className="text-xl font-semibold text-white mb-2">Рейтинг</h3>
-                  <p className="text-slate-400 text-sm">Таблица лидеров</p>
+                className="bg-slate-800/50 border-slate-700/50 hover:border-yellow-500/50 cursor-pointer hover:-translate-y-1 transition-all">
+                <CardContent className="p-4 md:p-8 text-center">
+                  <div className="text-3xl md:text-5xl mb-2 md:mb-4">🏆</div>
+                  <h3 className="text-base md:text-xl font-semibold text-white mb-1 md:mb-2">Рейтинг</h3>
+                  <p className="text-slate-400 text-xs md:text-sm hidden md:block">Таблица лидеров</p>
                 </CardContent>
               </Card>
+              
+              <div className="hidden md:flex items-center justify-center">
+                <div className="text-center text-slate-500 text-sm px-4">
+                  <p className="mb-1">Разработчики</p>
+                  <p className="text-slate-400">Даниил Беседин<br/>Александр Чарышкин</p>
+                </div>
+              </div>
             </div>
             
-            {/* Developers */}
-            <div className="text-center text-slate-500 text-sm">
+            {/* Mobile Developers */}
+            <div className="md:hidden text-center text-slate-500 text-sm mt-6">
               <p className="mb-1">Разработчики</p>
               <p className="text-slate-400">Даниил Беседин • Александр Чарышкин</p>
             </div>
