@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -85,6 +85,31 @@ export default function Page() {
   const [chatMessages, setChatMessages] = useState<{role: 'user' | 'assistant', content: string}[]>([])
   const [chatInput, setChatInput] = useState('')
   const [chatLoading, setChatLoading] = useState(false)
+  const chatEndRef = useRef<HTMLDivElement>(null)
+
+  // Load chat messages from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem('chatMessages')
+    if (saved) {
+      try {
+        setChatMessages(JSON.parse(saved))
+      } catch (e) {
+        console.error('Failed to load chat messages:', e)
+      }
+    }
+  }, [])
+
+  // Save chat messages to localStorage
+  useEffect(() => {
+    if (chatMessages.length > 0) {
+      localStorage.setItem('chatMessages', JSON.stringify(chatMessages))
+    }
+  }, [chatMessages])
+
+  // Scroll to bottom on new messages
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [chatMessages, chatLoading])
 
   useEffect(() => {
     fetch('/api/elements')
@@ -748,6 +773,7 @@ export default function Page() {
                       </div>
                     </div>
                   )}
+                  <div ref={chatEndRef} />
                 </div>
                 
                 {/* Input */}
@@ -769,6 +795,17 @@ export default function Page() {
                       <Send className="w-5 h-5" />
                     </Button>
                   </div>
+                  {chatMessages.length > 0 && (
+                    <button 
+                      onClick={() => {
+                        setChatMessages([])
+                        localStorage.removeItem('chatMessages')
+                      }}
+                      className="w-full mt-3 text-sm text-slate-500 hover:text-slate-300 transition-colors"
+                    >
+                      Очистить чат
+                    </button>
+                  )}
                 </div>
               </CardContent>
             </Card>
