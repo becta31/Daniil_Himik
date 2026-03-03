@@ -367,17 +367,10 @@ export default function Page() {
                   <p className="text-slate-400 text-xs md:text-sm hidden md:block">Таблица лидеров</p>
                 </CardContent>
               </Card>
-              
-              <div className="hidden md:flex items-center justify-center">
-                <div className="text-center text-slate-500 text-sm px-4">
-                  <p className="mb-1">Разработчики</p>
-                  <p className="text-slate-400">Даниил Беседин<br/>Александр Чарышкин</p>
-                </div>
-              </div>
             </div>
             
-            {/* Mobile Developers */}
-            <div className="md:hidden text-center text-slate-500 text-sm mt-6">
+            {/* Developers */}
+            <div className="text-center text-slate-500 text-sm mt-6">
               <p className="mb-1">Разработчики</p>
               <p className="text-slate-400">Даниил Беседин • Александр Чарышкин</p>
             </div>
