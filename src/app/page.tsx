@@ -202,13 +202,15 @@ export default function Page() {
       })
       
       const data = await res.json()
+      console.log('API response:', data)
       
-      if (data.response) {
+      if (res.ok && data.response) {
         setChatMessages(prev => [...prev, { role: 'assistant', content: data.response }])
       } else {
-        setChatMessages(prev => [...prev, { role: 'assistant', content: 'Произошла ошибка. Попробуйте ещё раз.' }])
+        setChatMessages(prev => [...prev, { role: 'assistant', content: data.error || 'Произошла ошибка. Попробуйте ещё раз.' }])
       }
-    } catch {
+    } catch (err) {
+      console.error('Chat error:', err)
       setChatMessages(prev => [...prev, { role: 'assistant', content: 'Произошла ошибка. Попробуйте ещё раз.' }])
     } finally {
       setChatLoading(false)
