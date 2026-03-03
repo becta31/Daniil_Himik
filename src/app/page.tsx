@@ -348,6 +348,9 @@ export default function Page() {
                 </CardContent>
               </Card>
               
+              {/* Empty cell for desktop alignment */}
+              <div className="hidden md:block" />
+              
               <Card 
                 onClick={() => handleNav('ai')} 
                 className="bg-slate-800/50 border-slate-700/50 hover:border-emerald-500/50 cursor-pointer hover:-translate-y-1 transition-all">
