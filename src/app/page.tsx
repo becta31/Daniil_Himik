@@ -751,7 +751,12 @@ export default function Page() {
                     </div>
                   ) : (
                     chatMessages.map((msg, i) => (
-                      <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                      <div key={i} className={`flex gap-2 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                        {msg.role === 'assistant' && (
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center flex-shrink-0">
+                            <FlaskConical className="w-4 h-4 text-white" />
+                          </div>
+                        )}
                         <div className={`max-w-[80%] rounded-2xl px-4 py-3 ${
                           msg.role === 'user' 
                             ? 'bg-cyan-500 text-white' 
@@ -759,11 +764,19 @@ export default function Page() {
                         }`}>
                           <p className="whitespace-pre-wrap">{msg.content}</p>
                         </div>
+                        {msg.role === 'user' && (
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0">
+                            <span className="text-white text-sm font-bold">В</span>
+                          </div>
+                        )}
                       </div>
                     ))
                   )}
                   {chatLoading && (
-                    <div className="flex justify-start">
+                    <div className="flex gap-2 justify-start">
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center flex-shrink-0">
+                        <FlaskConical className="w-4 h-4 text-white" />
+                      </div>
                       <div className="bg-slate-700 rounded-2xl px-4 py-3">
                         <div className="flex gap-1">
                           <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" />
