@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
       // Получаем последнее сообщение пользователя
       const lastUserMessage = messages.filter((m: { role: string }) => m.role === 'user').pop();
       
-      // Формируем промпт для модели
+      // Формируем промпт для Qwen модели
       const prompt = `<|im_start|>system
 ${SYSTEM_PROMPT}<|im_end|>
 <|im_start|>user
@@ -35,50 +35,56 @@ ${lastUserMessage?.content}<|im_end|>
 <|im_start|>assistant
 `;
 
-      console.log('Calling Hugging Face API...');
+      console.log('Calling Hugging Face Inference API...');
       
-      const response = await fetch(
-        'https://router.huggingface.co/hf-inference/models/Qwen/Qwen2.5-72B-Instruct',
-        {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${hfApiKey}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            inputs: prompt,
-            parameters: {
-              max_new_tokens: 500,
-              temperature: 0.7,
-              return_full_text: false,
-            },
-          }),
+      // Пробуем разные модели
+      const models = [
+        'Qwen/Qwen2.5-7B-Instruct',
+        'Qwen/Qwen3-4B-Instruct-2507',
+      ];
+
+      for (const model of models) {
+        try {
+          const response = await fetch(
+            `https://router.huggingface.co/hf-inference/models/${model}`,
+            {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${hfApiKey}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                inputs: prompt,
+                parameters: {
+                  max_new_tokens: 500,
+                  temperature: 0.7,
+                  return_full_text: false,
+                },
+              }),
+            }
+          );
+
+          if (response.ok) {
+            const data = await response.json();
+            console.log('HF response from', model, ':', JSON.stringify(data, null, 2));
+
+            const content = Array.isArray(data) 
+              ? data[0]?.generated_text 
+              : data.generated_text;
+            
+            if (content) {
+              const cleanContent = content
+                .replace(/<\|im_end\|>/g, '')
+                .replace(/<\|im_start\|>/g, '')
+                .trim();
+              return NextResponse.json({ response: cleanContent });
+            }
+          } else {
+            console.log(`Model ${model} failed:`, response.status);
+          }
+        } catch (e) {
+          console.log(`Model ${model} error:`, e);
         }
-      );
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('HF API error:', response.status, errorText);
-        return NextResponse.json({ 
-          error: `Ошибка API: ${response.status}` 
-        }, { status: 500 });
-      }
-
-      const data = await response.json();
-      console.log('HF response:', JSON.stringify(data, null, 2));
-
-      // HF возвращает массив с generated_text
-      const content = Array.isArray(data) 
-        ? data[0]?.generated_text 
-        : data.generated_text;
-      
-      if (content) {
-        // Очищаем ответ от артефактов
-        const cleanContent = content
-          .replace(/<\|im_end\|>/g, '')
-          .replace(/<\|im_start\|>/g, '')
-          .trim();
-        return NextResponse.json({ response: cleanContent });
       }
     }
 
@@ -117,7 +123,7 @@ ${lastUserMessage?.content}<|im_end|>
     }
 
     return NextResponse.json({ 
-      error: 'ИИ-помощник не настроен. Добавьте HUGGINGFACE_API_KEY в переменные окружения.' 
+      error: 'ИИ-помощник не настроен или модели недоступны. Проверьте HUGGINGFACE_API_KEY.' 
     }, { status: 500 });
 
   } catch (error) {
