@@ -317,7 +317,7 @@ export default function Page() {
               </p>
             </div>
             
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-12">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6">
               <Card 
                 onClick={() => handleNav('table')} 
                 className="bg-slate-800/50 border-slate-700/50 hover:border-cyan-500/50 cursor-pointer hover:-translate-y-1 transition-all">
@@ -347,10 +347,12 @@ export default function Page() {
                   <p className="text-slate-400 text-sm">Проверьте знания</p>
                 </CardContent>
               </Card>
-              
+            </div>
+            
+            <div className="flex justify-center gap-6 mb-12">
               <Card 
                 onClick={() => handleNav('ai')} 
-                className="bg-slate-800/50 border-slate-700/50 hover:border-emerald-500/50 cursor-pointer hover:-translate-y-1 transition-all">
+                className="bg-slate-800/50 border-slate-700/50 hover:border-emerald-500/50 cursor-pointer hover:-translate-y-1 transition-all w-full md:w-auto md:min-w-[200px]">
                 <CardContent className="p-8 text-center">
                   <div className="text-5xl mb-4">🤖</div>
                   <h3 className="text-xl font-semibold text-white mb-2">ИИ-помощник</h3>
@@ -360,7 +362,7 @@ export default function Page() {
               
               <Card 
                 onClick={() => handleNav('leaderboard')} 
-                className="bg-slate-800/50 border-slate-700/50 hover:border-yellow-500/50 cursor-pointer hover:-translate-y-1 transition-all md:col-start-2">
+                className="bg-slate-800/50 border-slate-700/50 hover:border-yellow-500/50 cursor-pointer hover:-translate-y-1 transition-all w-full md:w-auto md:min-w-[200px]">
                 <CardContent className="p-8 text-center">
                   <div className="text-5xl mb-4">🏆</div>
                   <h3 className="text-xl font-semibold text-white mb-2">Рейтинг</h3>
