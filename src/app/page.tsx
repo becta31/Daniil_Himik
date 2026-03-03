@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
-import { Table, BookOpen, Target, Trophy, Atom, ChevronRight, Medal, Menu, X, Home, Zap, FlaskConical, Award } from 'lucide-react'
+import { Table, BookOpen, Target, Trophy, Atom, ChevronRight, Medal, Menu, X, Home, Zap, FlaskConical, Award, MessageCircle, Send } from 'lucide-react'
 
 interface Element {
   id: string
@@ -54,10 +54,11 @@ const NAV_ITEMS = [
   { id: 'table', icon: Table, label: 'Таблица' },
   { id: 'study', icon: BookOpen, label: 'Обучение' },
   { id: 'quiz', icon: Target, label: 'Викторина' },
+  { id: 'ai', icon: MessageCircle, label: 'ИИ' },
   { id: 'leaderboard', icon: Trophy, label: 'Рейтинг' },
 ] as const
 
-type ViewType = 'home' | 'table' | 'study' | 'quiz' | 'leaderboard'
+type ViewType = 'home' | 'table' | 'study' | 'quiz' | 'ai' | 'leaderboard'
 
 export default function Page() {
   const [view, setView] = useState<ViewType>('home')
@@ -79,6 +80,11 @@ export default function Page() {
   const [saved, setSaved] = useState(false)
   
   const [leaderboard, setLeaderboard] = useState<{id: string, playerName: string, score: number, correctAnswers: number, totalQuestions: number, createdAt: string}[]>([])
+  
+  // AI Chat
+  const [chatMessages, setChatMessages] = useState<{role: 'user' | 'assistant', content: string}[]>([])
+  const [chatInput, setChatInput] = useState('')
+  const [chatLoading, setChatLoading] = useState(false)
 
   useEffect(() => {
     fetch('/api/elements')
@@ -180,6 +186,35 @@ export default function Page() {
     setMobileMenuOpen(false)
   }
 
+  const sendChatMessage = async () => {
+    if (!chatInput.trim() || chatLoading) return
+    
+    const userMessage = chatInput.trim()
+    setChatInput('')
+    setChatMessages(prev => [...prev, { role: 'user', content: userMessage }])
+    setChatLoading(true)
+    
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: [...chatMessages, { role: 'user', content: userMessage }] })
+      })
+      
+      const data = await res.json()
+      
+      if (data.response) {
+        setChatMessages(prev => [...prev, { role: 'assistant', content: data.response }])
+      } else {
+        setChatMessages(prev => [...prev, { role: 'assistant', content: 'Произошла ошибка. Попробуйте ещё раз.' }])
+      }
+    } catch {
+      setChatMessages(prev => [...prev, { role: 'assistant', content: 'Произошла ошибка. Попробуйте ещё раз.' }])
+    } finally {
+      setChatLoading(false)
+    }
+  }
+
   if (loading) return (
     <div className="min-h-screen bg-slate-900 flex items-center justify-center">
       <div className="animate-spin w-8 h-8 border-4 border-cyan-500 border-t-transparent rounded-full" />
@@ -255,14 +290,14 @@ export default function Page() {
               </p>
             </div>
             
-            <div className="grid grid-cols-2 gap-6 mb-12">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-12">
               <Card 
                 onClick={() => handleNav('table')} 
                 className="bg-slate-800/50 border-slate-700/50 hover:border-cyan-500/50 cursor-pointer hover:-translate-y-1 transition-all">
                 <CardContent className="p-8 text-center">
                   <div className="text-5xl mb-4">⚛️</div>
                   <h3 className="text-xl font-semibold text-white mb-2">Таблица</h3>
-                  <p className="text-slate-400 text-sm">Интерактивная таблица Менделеева с 118 элементами</p>
+                  <p className="text-slate-400 text-sm">Интерактивная таблица Менделеева</p>
                 </CardContent>
               </Card>
               
@@ -272,7 +307,7 @@ export default function Page() {
                 <CardContent className="p-8 text-center">
                   <div className="text-5xl mb-4">📚</div>
                   <h3 className="text-xl font-semibold text-white mb-2">Обучение</h3>
-                  <p className="text-slate-400 text-sm">Изучайте карточки с информацией об элементах</p>
+                  <p className="text-slate-400 text-sm">Карточки с элементами</p>
                 </CardContent>
               </Card>
               
@@ -282,17 +317,27 @@ export default function Page() {
                 <CardContent className="p-8 text-center">
                   <div className="text-5xl mb-4">🎯</div>
                   <h3 className="text-xl font-semibold text-white mb-2">Викторина</h3>
-                  <p className="text-slate-400 text-sm">Проверьте свои знания и получите очки</p>
+                  <p className="text-slate-400 text-sm">Проверьте знания</p>
+                </CardContent>
+              </Card>
+              
+              <Card 
+                onClick={() => handleNav('ai')} 
+                className="bg-slate-800/50 border-slate-700/50 hover:border-emerald-500/50 cursor-pointer hover:-translate-y-1 transition-all">
+                <CardContent className="p-8 text-center">
+                  <div className="text-5xl mb-4">🤖</div>
+                  <h3 className="text-xl font-semibold text-white mb-2">ИИ-помощник</h3>
+                  <p className="text-slate-400 text-sm">Задайте вопрос по химии</p>
                 </CardContent>
               </Card>
               
               <Card 
                 onClick={() => handleNav('leaderboard')} 
-                className="bg-slate-800/50 border-slate-700/50 hover:border-yellow-500/50 cursor-pointer hover:-translate-y-1 transition-all">
+                className="bg-slate-800/50 border-slate-700/50 hover:border-yellow-500/50 cursor-pointer hover:-translate-y-1 transition-all md:col-start-2">
                 <CardContent className="p-8 text-center">
                   <div className="text-5xl mb-4">🏆</div>
                   <h3 className="text-xl font-semibold text-white mb-2">Рейтинг</h3>
-                  <p className="text-slate-400 text-sm">Таблица лидеров и лучшие результаты</p>
+                  <p className="text-slate-400 text-sm">Таблица лидеров</p>
                 </CardContent>
               </Card>
             </div>
@@ -655,11 +700,83 @@ export default function Page() {
             )}
           </div>
         )}
+
+        {/* AI Chat */}
+        {view === 'ai' && (
+          <div className="max-w-2xl mx-auto">
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <MessageCircle className="w-8 h-8 text-white" />
+              </div>
+              <h2 className="text-2xl font-bold">ИИ-помощник</h2>
+              <p className="text-slate-400">Задайте любой вопрос по химии</p>
+            </div>
+            
+            <Card className="bg-slate-800/50 border-slate-700">
+              <CardContent className="p-0">
+                {/* Messages */}
+                <div className="h-[400px] overflow-y-auto p-4 space-y-4">
+                  {chatMessages.length === 0 ? (
+                    <div className="h-full flex flex-col items-center justify-center text-slate-500">
+                      <MessageCircle className="w-12 h-12 mb-4 opacity-50" />
+                      <p>Напишите вопрос по химии</p>
+                      <p className="text-sm mt-2">Например: "Расскажи о водороде"</p>
+                    </div>
+                  ) : (
+                    chatMessages.map((msg, i) => (
+                      <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                        <div className={`max-w-[80%] rounded-2xl px-4 py-3 ${
+                          msg.role === 'user' 
+                            ? 'bg-cyan-500 text-white' 
+                            : 'bg-slate-700 text-slate-200'
+                        }`}>
+                          <p className="whitespace-pre-wrap">{msg.content}</p>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                  {chatLoading && (
+                    <div className="flex justify-start">
+                      <div className="bg-slate-700 rounded-2xl px-4 py-3">
+                        <div className="flex gap-1">
+                          <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" />
+                          <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
+                          <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+                
+                {/* Input */}
+                <div className="border-t border-slate-700 p-4">
+                  <div className="flex gap-2">
+                    <Input
+                      value={chatInput}
+                      onChange={e => setChatInput(e.target.value)}
+                      onKeyDown={e => e.key === 'Enter' && sendChatMessage()}
+                      placeholder="Введите вопрос..."
+                      className="bg-slate-700/50 border-slate-600 text-white"
+                      disabled={chatLoading}
+                    />
+                    <Button 
+                      onClick={sendChatMessage} 
+                      disabled={!chatInput.trim() || chatLoading}
+                      className="bg-emerald-500 hover:bg-emerald-600"
+                    >
+                      <Send className="w-5 h-5" />
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
       </main>
 
       {/* Mobile Bottom Navigation */}
       <nav className="md:hidden fixed bottom-0 inset-x-0 bg-slate-900/95 backdrop-blur-md border-t border-slate-700 z-50">
-        <div className="grid grid-cols-5">
+        <div className="grid grid-cols-6">
           {NAV_ITEMS.map(item => (
             <button key={item.id} onClick={() => handleNav(item.id)}
               className={`flex flex-col items-center justify-center py-3 transition-colors ${
