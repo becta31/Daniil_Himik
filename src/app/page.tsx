@@ -126,8 +126,9 @@ export default function Page() {
       })
   }, [])
 
-  const filtered = elements.filter(e => 
-    !search || e.symbol.toLowerCase().includes(search.toLowerCase()) || e.nameRu.includes(search)
+  const query = search.trim().toLowerCase()
+  const filtered = elements.filter(element =>
+    !query || element.symbol.toLowerCase().includes(query) || element.nameRu.toLowerCase().includes(query)
   )
 
   const genQuiz = () => {
@@ -538,6 +539,12 @@ export default function Page() {
                     className="flex-1 bg-cyan-500 hover:bg-cyan-600 h-12">Далее →</Button>
                 </div>
               </>
+            )}
+            {elements.length > 0 && filtered.length === 0 && (
+              <div role="status" className="rounded-xl border border-slate-700/50 bg-slate-800/50 p-6 text-center">
+                <p className="font-semibold text-white">Элементы не найдены</p>
+                <p className="mt-2 text-sm text-slate-400">Попробуйте другой символ или название элемента.</p>
+              </div>
             )}
           </div>
         )}
