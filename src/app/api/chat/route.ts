@@ -37,12 +37,13 @@ export async function POST(request: NextRequest) {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            model: 'llama-3.3-70b-versatile',
+            model: 'openai/gpt-oss-120b',
             messages: [
               { role: 'system', content: SYSTEM_PROMPT },
               ...formattedMessages
             ],
-            max_tokens: 500,
+            reasoning_effort: 'low',
+            max_completion_tokens: 1024,
             temperature: 0.7,
           }),
         });
