@@ -8,6 +8,7 @@ import { Progress } from '@/components/ui/progress'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Table, BookOpen, Target, Trophy, Atom, ChevronRight, Medal, Menu, X, Home, Zap, FlaskConical, Award, MessageCircle, Send } from 'lucide-react'
+import ReactMarkdown from 'react-markdown'
 
 interface Element {
   id: string
@@ -533,7 +534,7 @@ export default function Page() {
                 
                 <div className="flex justify-between mt-6 gap-4">
                   <Button variant="outline" onClick={() => setIdx(i => Math.max(0, i - 1))} disabled={idx === 0} 
-                    className="flex-1 border-slate-600 text-slate-300 hover:text-white hover:bg-slate-800 h-12">← Назад</Button>
+                    className="flex-1 bg-slate-800 border-slate-600 text-slate-100 hover:text-white hover:bg-slate-700 h-12">← Назад</Button>
                   <Button onClick={() => setIdx(i => Math.min(filtered.length - 1, i + 1))} 
                     disabled={idx === filtered.length - 1} 
                     className="flex-1 bg-cyan-500 hover:bg-cyan-600 h-12">Далее →</Button>
@@ -775,7 +776,7 @@ export default function Page() {
                             ? 'bg-cyan-500 text-white' 
                             : 'bg-slate-700 text-slate-200'
                         }`}>
-                          <p className="whitespace-pre-wrap">{msg.content}</p>
+                          {msg.role === 'assistant' ? (<div className="space-y-2 [&>p]:mb-2 [&>p:last-child]:mb-0 [&>ul]:list-disc [&>ul]:pl-4 [&>ul]:space-y-1 [&>ol]:list-decimal [&>ol]:pl-4 [&>ol]:space-y-1 [&_strong]:font-semibold [&_strong]:text-white"><ReactMarkdown>{msg.content}</ReactMarkdown></div>) : (<p className="whitespace-pre-wrap">{msg.content}</p>)}
                         </div>
                         {msg.role === 'user' && (
                           <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0">
